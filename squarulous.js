@@ -119,23 +119,39 @@ function moveObstacles() {
       o.y += o.dy;
       
       /*If an obstacle intersects an obstacle, collide the obstacles*/
-      //TODO: More efficient algorithm. Current is O(n^2)?
-      for(var j=0;j<obstacles.length;j++) {
-         if(i!=j) {
+      for(var j=i+1;j<obstacles.length;j++) {
+            var THRESHOLD = 1;
             var other = obstacles[j];
             if(other.x <= o.x + OBSTACLE_SIZE
                && o.x <= (other.x + OBSTACLE_SIZE)
                && other.y <= (o.y + OBSTACLE_SIZE)
                && o.y <= (other.y + OBSTACLE_SIZE))
             {
-               //TODO: Implement laws of physics
-               //TODO: Fix stutter when obstacles collide
-               o.dx *= -1;
-               o.dy *= -1;
-               other.dx *= -1;
-               other.dy *= -1;
+               //Right to left collision
+               if(Math.abs(other.x + OBSTACLE_SIZE - o.x) <= THRESHOLD) {
+                  var temp = o.dx;
+                  o.dx = other.dx;
+                  other.dx - temp;
+               }
+               //Bottom to top collision
+               if(Math.abs(other.y + OBSTACLE_SIZE - o.y) <= THRESHOLD) {
+                  var temp = o.dy;
+                  o.dy = other.dy;
+                  other.dy = temp;
+               }
+               //Top to bottom collision
+               if(Math.abs(other.y - (o.y + OBSTACLE_SIZE)) <= THRESHOLD) {
+                  var temp = o.dy;
+                  o.dy = other.dy;
+                  other.dy = temp;
+               }
+               //Left to right collision
+               if(Math.abs(other.x - (o.x + OBSTACLE_SIZE)) <= THRESHOLD) {
+                  var temp = o.dx;
+                  o.dx = other.dx;
+                  other.dx - temp;
+               }
             }
-         }
       }
 
       /* If an obstacle intersects the hero, it's game over */
