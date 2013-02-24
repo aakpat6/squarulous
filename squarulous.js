@@ -17,9 +17,15 @@ var HERO_SIZE = 32;
 var TARGET_SIZE = 30;
 var OBSTACLE_SIZE = 30;
 
+var START_SCREEN = 0;
+var IN_GAME = 1;
+var GAME_OVER = 2;
+
 var obstacles = []; // Obstacles list
 var score = 0;
 var keysDown = {}; // Dictionary of which keys are pressed at a given time.
+var handle = null; // The timeout handle
+var gameStatus = IN_GAME;
 
 /* Make the 3 objects */
 var hero = {
@@ -49,11 +55,18 @@ function Obstacle() {
 /* Key listeners */
 canvas.addEventListener("keydown", function (e) {
    keysDown[e.keyCode] = true;
-}, false)
+}, false);
 
 canvas.addEventListener("keyup", function (e) {
    delete keysDown[e.keyCode];
-}, false)
+}, false);
+
+canvas.addEventListener('mousedown', function (e) {
+   console.log('got a click');
+   if (gameStatus == START_SCREEN) return;
+   if (gameStatus == IN_GAME) return;
+   if (gameStatus == GAME_OVER) checkRetryClick(e);
+}, false);
 
 /* Moves the target to a random location on the canvas */
 function moveTarget() {
@@ -132,14 +145,9 @@ function moveObstacles() {
       && o.y <= (hero.y + HERO_SIZE))
       {
          keysDown = {}; // Stop moving
-         alert("Game Over\nScore: " + score);
-
-         /* Reinit vars */
-         obstacles = [];
-         score = 0;
-         moveTarget();
-         hero.x = canvas.width/2;
-         hero.y = canvas.height/2;
+                  
+         clearTimeout(handle);
+         gameOver();
       }
    }
 }
@@ -178,9 +186,45 @@ function render() {
    ctx.fillText("Score: " + score, canvas.width/2,30);
 }
 
+function gameOver() {
+   handle = setTimeout(gameOver, 10);
+   gameStatus = GAME_OVER;
+   
+   ctx.fillStyle = "#000000";
+   ctx.fillRect(0,0,canvas.width,canvas.height);
+   
+   ctx.fillStyle = "#ffffff";
+   ctx.font = "54px Arial";
+   ctx.textAlign = "center";
+   ctx.fillText("GAME OVER!", canvas.width/2, 150);
+   ctx.fillText("Score: " + score, canvas.width/2, 275);
+   
+   ctx.fillStyle = "#007700";
+   ctx.fillRect(canvas.width/2-150, 350, 300, 80); 
+   ctx.fillStyle = "#ffffff";
+   ctx.font = "30px Arial";
+   ctx.fillText("Retry?", canvas.width/2, 400);
+}
+
+function checkRetryClick(e) {
+   console.log('check click');
+   if (e.x > canvas.width/2-150 && 
+       e.x < canvas.width/2+150 && 
+       e.y > 350 && e.y < 430) {
+      /* Reinit vars */
+      obstacles = [];
+      score = 0;
+      moveTarget();
+      hero.x = canvas.width/2;
+      hero.y = canvas.height/2;
+      clearTimeout(handle);
+      main();
+   }  
+}
+
 /* Main game loop; calls all other functions */
 function main() {
-   setTimeout(main, 10); // Makes sure main will happen every 10 ms
+   handle = setTimeout(main, 10); // Makes sure main will happen every 10 ms
    
    update();
    render();
