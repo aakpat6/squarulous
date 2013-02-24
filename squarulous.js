@@ -14,6 +14,15 @@ window.onresize = function(event) {
 	canvas.height = window.innerHeight;
 }
 
+/* Initialize variables */
+var HERO_SIZE = 32;
+var TARGET_SIZE = 30;
+var OBSTACLE_SIZE = 30;
+
+var obstacles = [];
+var score = 0;
+var keysDown = {};
+
 /* Make the 3 objects */
 var hero = {
 	speed: 5,
@@ -28,23 +37,16 @@ var target = {
 
 function Obstacle() {	
 	var speedfactor = 5;
-	var tmpdy = Math.random() * speedfactor;
-	var tmpdx = Math.random() * speedfactor;
-	this.x = 32 + (Math.random() * (canvas.width - 64));
-	this.y = 32 + (Math.random() * (canvas.height - 64));
-	this.dx = tmpdx;
-	this.dy = tmpdy;
+	this.x = OBSTACLE_SIZE + (Math.random() * (canvas.width - 2*OBSTACLE_SIZE));
+	this.y = OBSTACLE_SIZE + (Math.random() * (canvas.height - 2*OBSTACLE_SIZE));
+	this.dx = Math.random() * speedfactor;
+	this.dy = Math.random() * speedfactor;
 	
 	/* Start the obstacle on the top or the right? */
 	var randStart = Math.floor(Math.random() * 2);
 	if (randStart == 0) this.y = 5;
 	else this.x = 5;
 }
-
-/* Initialize variables */
-var obstacles = [];
-var score = 0;
-var keysDown = {};
 
 /* Key listeners */
 canvas.addEventListener("keydown", function (e) {
@@ -57,8 +59,8 @@ canvas.addEventListener("keyup", function (e) {
 
 /* Moves the target to a random location on the canvas */
 function moveTarget() {
-	target.x = 64 + (Math.random() * (canvas.width - 96));
-	target.y = 64 + (Math.random() * (canvas.height - 96));
+	target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width - 3*TARGET_SIZE));
+	target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height - 3*TARGET_SIZE));
 }
 
 function moveHero() {
@@ -80,10 +82,10 @@ function moveHero() {
 	}
 
 	/* After scoring, add an obstacle and increment score */
-	if (hero.x <= target.x + 30
-		&& target.x <= (hero.x + 30)
-		&& hero.y <= (target.y + 30)
-		&& target.y <= (hero.y + 30))
+	if (hero.x <= target.x + TARGET_SIZE
+		&& target.x <= (hero.x + HERO_SIZE)
+		&& hero.y <= (target.y + TARGET_SIZE)
+		&& target.y <= (hero.y + HERO_SIZE))
 	{
 		score++;
 		moveTarget();
@@ -96,20 +98,20 @@ function moveObstacles() {
 	/* First, move all the obstacles */
 	for (var i = 0; i < obstacles.length; i++) {
 		var o = obstacles[i];
-		if (!(o.x > 0 && o.x < canvas.width-30)) {
+		if (!(o.x > 0 && o.x < canvas.width-OBSTACLE_SIZE)) {
 			o.dx *= -1;
 		}
-		if (!(o.y > 0 && o.y < canvas.height-30)) {
+		if (!(o.y > 0 && o.y < canvas.height-OBSTACLE_SIZE)) {
 			o.dy *= -1;
 		}
 		o.x += o.dx;
 		o.y += o.dy;
 		
 		/* If an obstacle intersects the hero, it's game over */
-		if (hero.x <= o.x + 30
-		&& o.x <= (hero.x + 30)
-		&& hero.y <= (o.y + 30)
-		&& o.y <= (hero.y + 30))
+		if (hero.x <= o.x + OBSTACLE_SIZE
+		&& o.x <= (hero.x + HERO_SIZE)
+		&& hero.y <= (o.y + OBSTACLE_SIZE)
+		&& o.y <= (hero.y + HERO_SIZE))
 		{
 			keysDown = {}; // Stop moving
 			alert("Game Over\nScore: " + score);
@@ -138,17 +140,17 @@ function render() {
 
 	/* Hero is green */
 	ctx.fillStyle = "#00ff00";
-	ctx.fillRect(hero.x, hero.y, 32,32);
+	ctx.fillRect(hero.x, hero.y, HERO_SIZE,HERO_SIZE);
 
 	/* Target is blue */
 	ctx.fillStyle = "#0000ff";
-	ctx.fillRect(target.x, target.y, 30, 30);
+	ctx.fillRect(target.x, target.y, TARGET_SIZE, TARGET_SIZE);
 
 	/* Obstacles are red */
 	ctx.fillStyle = "#ff0000";
 	for (var i = 0; i < obstacles.length; i++) {
 		var o = obstacles[i];
-		ctx.fillRect(o.x,o.y,30,30);
+		ctx.fillRect(o.x,o.y,OBSTACLE_SIZE,OBSTACLE_SIZE);
 	}
 
 	/* Display the score at the top */
