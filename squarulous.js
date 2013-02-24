@@ -1,6 +1,3 @@
-//TODO: Greatly improve obstacle collision
-//TODO: Add momentum? Small movement after key is lifted?
-
 /* Initialize HTML elements */
 var canvas = document.getElementById("myCanvas");
 canvas.setAttribute('tabindex', '0');
