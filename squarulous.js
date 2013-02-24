@@ -35,6 +35,7 @@ var target = {
 	y: 0
 };
 
+//TODO: Style error: line 42 has 81 chars. Come on aakpat6!
 function Obstacle() {	
 	var speedfactor = 5;
 	this.x = OBSTACLE_SIZE + (Math.random() * (canvas.width - 2*OBSTACLE_SIZE));
