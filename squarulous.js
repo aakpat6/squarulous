@@ -1,4 +1,6 @@
-/* TODO: Implement collision detection between obstacles */
+//TODO: Fix target from spawing half-inside map
+//TODO: Greatly improve obstacle collision
+//TODO: Add momentum? Small movement after key is lifted?
 
 /* Initialize HTML elements */
 var canvas = document.getElementById("myCanvas");
@@ -59,8 +61,8 @@ canvas.addEventListener("keyup", function (e) {
 
 /* Moves the target to a random location on the canvas */
 function moveTarget() {
-   target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width - 3*TARGET_SIZE));
-   target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height - 3*TARGET_SIZE));
+   target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width- 3*TARGET_SIZE));
+   target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height- 3*TARGET_SIZE));
 }
 
 function moveHero() {
@@ -107,6 +109,26 @@ function moveObstacles() {
       o.x += o.dx;
       o.y += o.dy;
       
+      /*If an obstacle intersects an obstacle, collide the obstacles*/
+      //TODO: More efficient algorithm. Current is O(n^2)?
+      for(var j=0;j<obstacles.length;j++) {
+         if(i!=j) {
+            var other = obstacles[j];
+            if(other.x <= o.x + OBSTACLE_SIZE
+               && o.x <= (other.x + OBSTACLE_SIZE)
+               && other.y <= (o.y + OBSTACLE_SIZE)
+               && o.y <= (other.y + OBSTACLE_SIZE))
+            {
+               //TODO: Implement laws of physics
+               //TODO: Fix stutter when obstacles collide
+               o.dx *= -1;
+               o.dy *= -1;
+               other.dx *= -1;
+               other.dy *= -1;
+            }
+         }
+      }
+
       /* If an obstacle intersects the hero, it's game over */
       if (hero.x <= o.x + OBSTACLE_SIZE
       && o.x <= (hero.x + HERO_SIZE)
