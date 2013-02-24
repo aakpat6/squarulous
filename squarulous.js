@@ -21,9 +21,9 @@ var HERO_SIZE = 32;
 var TARGET_SIZE = 30;
 var OBSTACLE_SIZE = 30;
 
-var obstacles = [];
+var obstacles = []; // Obstacles list
 var score = 0;
-var keysDown = {};
+var keysDown = {}; // Dictionary of which keys are pressed at a given time.
 
 /* Make the 3 objects */
 var hero = {
@@ -71,7 +71,7 @@ function moveHero() {
       hero.y -= hero.speed;
    }
    /* Down */
-   if (40 in keysDown && hero.y < canvas.height-32) {
+   if (40 in keysDown && hero.y < canvas.height-HERO_SIZE-10) {
       hero.y += hero.speed;
    }
    /* Left */
@@ -79,7 +79,7 @@ function moveHero() {
       hero.x -= hero.speed;
    }
    /* Right */
-   if (39 in keysDown && hero.x < canvas.width-32) {
+   if (39 in keysDown && hero.x < canvas.width-HERO_SIZE-10) {
       hero.x += hero.speed;
    }
 
