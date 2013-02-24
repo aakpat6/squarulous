@@ -1,7 +1,7 @@
-/* Initialize HTML elements */
 /* TODO: Deal with canvas resize */
 /* TODO: Implement collision detection between obstacles */
 
+/* Initialize HTML elements */
 var canvas = document.getElementById("myCanvas");
 canvas.setAttribute('tabindex', '0');
 canvas.width = window.innerWidth;
