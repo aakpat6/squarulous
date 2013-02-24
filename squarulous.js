@@ -18,12 +18,9 @@ function gameOver() {
 /* Main game loop; calls all other functions */
 function main() {
    handle = setTimeout(main, 10); // Makes sure main will happen every 10 ms
-   
    update();
    render();
-   
    /* Makes sure that the update is occurring as it should */
-   console.log(new Date().getMilliseconds() - last);
    last = new Date().getMilliseconds();
 }
 
