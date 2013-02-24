@@ -19,9 +19,9 @@ var HERO_SIZE = 32;
 var TARGET_SIZE = 30;
 var OBSTACLE_SIZE = 30;
 
-var obstacles = [];
+var obstacles = []; // List of obstacles
 var score = 0;
-var keysDown = {};
+var keysDown = {}; // Dictionary of keys that are pressed
 
 /* Make the 3 objects */
 var hero = {
@@ -59,8 +59,8 @@ canvas.addEventListener("keyup", function (e) {
 
 /* Moves the target to a random location on the canvas */
 function moveTarget() {
-   target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width - 3*TARGET_SIZE));
-   target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height - 3*TARGET_SIZE));
+   target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width-3*TARGET_SIZE));
+   target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height-3*TARGET_SIZE));
 }
 
 function moveHero() {
@@ -69,7 +69,7 @@ function moveHero() {
       hero.y -= hero.speed;
    }
    /* Down */
-   if (40 in keysDown && hero.y < canvas.height-32) {
+   if (40 in keysDown && hero.y < canvas.height-HERO_SIZE-10) {
       hero.y += hero.speed;
    }
    /* Left */
@@ -77,7 +77,7 @@ function moveHero() {
       hero.x -= hero.speed;
    }
    /* Right */
-   if (39 in keysDown && hero.x < canvas.width-32) {
+   if (39 in keysDown && hero.x < canvas.width-HERO_SIZE-10) {
       hero.x += hero.speed;
    }
 
@@ -95,15 +95,17 @@ function moveHero() {
 
 /* Moves each of the obstacles one step in their respective directions */
 function moveObstacles() {
-   /* First, move all the obstacles */
+   /* Move all the obstacles */
    for (var i = 0; i < obstacles.length; i++) {
       var o = obstacles[i];
+      /* Bump off the walls if it's not in bounds */
       if (!(o.x > 0 && o.x < canvas.width-OBSTACLE_SIZE)) {
          o.dx *= -1;
       }
       if (!(o.y > 0 && o.y < canvas.height-OBSTACLE_SIZE)) {
          o.dy *= -1;
       }
+      
       o.x += o.dx;
       o.y += o.dy;
       
