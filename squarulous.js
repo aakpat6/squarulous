@@ -12,7 +12,7 @@ var hero = {
 	y: canvas.height/2,
 };
 
-var monster = {
+var target = {
 	x: 0,
 	y: 0
 };
@@ -29,9 +29,9 @@ canvas.addEventListener("keyup", function (e) {
 	delete keysDown[e.keyCode];
 }, false)
 
-function moveMonster() {
-	monster.x = 64 + (Math.random() * (canvas.width - 96));
-	monster.y = 64 + (Math.random() * (canvas.height - 96));
+function moveTarget() {
+	target.x = 64 + (Math.random() * (canvas.width - 96));
+	target.y = 64 + (Math.random() * (canvas.height - 96));
 }
 
 function moveHero() {
@@ -49,13 +49,13 @@ function moveHero() {
 	}
 
 	/* After scoring, add an obstacle and increment score */
-	if (hero.x <= monster.x + 30
-		&& monster.x <= (hero.x + 30)
-		&& hero.y <= (monster.y + 30)
-		&& monster.y <= (hero.y + 30))
+	if (hero.x <= target.x + 30
+		&& target.x <= (hero.x + 30)
+		&& hero.y <= (target.y + 30)
+		&& target.y <= (hero.y + 30))
 	{
 		score++;
-		moveMonster();
+		moveTarget();
 
 		var upDown = Math.floor(Math.random() * 2);
 		var tmpdy = Math.random() * 5;
@@ -106,7 +106,7 @@ function moveObstacles() {
 
 			obstacles = [];
 			score = 0;
-			moveMonster();
+			movetarget();
 			hero.x = canvas.width/2;
 			hero.y = canvas.height/2;
 		}
@@ -126,7 +126,7 @@ function render() {
 	ctx.fillRect(hero.x, hero.y, 32,32);
 
 	ctx.fillStyle = "#0000ff";
-	ctx.fillRect(monster.x, monster.y, 30, 30);
+	ctx.fillRect(target.x, target.y, 30, 30);
 
 	ctx.fillStyle = "#ff0000";
 	for (var i = 0; i < obstacles.length; i++) {
@@ -149,6 +149,6 @@ function main() {
 	last = new Date().getMilliseconds();
 }
 
-moveMonster();
+moveTarget();
 var last = new Date().getMilliseconds();
 main();
