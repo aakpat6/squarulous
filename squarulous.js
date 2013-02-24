@@ -1,4 +1,3 @@
-//TODO: Fix target from spawing half-inside map
 //TODO: Greatly improve obstacle collision
 //TODO: Add momentum? Small movement after key is lifted?
 
@@ -61,8 +60,8 @@ canvas.addEventListener("keyup", function (e) {
 
 /* Moves the target to a random location on the canvas */
 function moveTarget() {
-   target.x = 3*TARGET_SIZE + (Math.random() * (canvas.width- 3*TARGET_SIZE));
-   target.y = 3*TARGET_SIZE + (Math.random() * (canvas.height- 3*TARGET_SIZE));
+   target.x = 2*TARGET_SIZE + (Math.random() * (canvas.width- 3*TARGET_SIZE));
+   target.y = 2*TARGET_SIZE + (Math.random() * (canvas.height- 3*TARGET_SIZE));
 }
 
 function moveHero() {
