@@ -1,4 +1,3 @@
-/* TODO: Deal with canvas resize */
 /* TODO: Implement collision detection between obstacles */
 
 /* Initialize HTML elements */
@@ -8,6 +7,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 canvas.focus();
 var ctx = canvas.getContext("2d");
+
+/* Deal with window resize */
+window.onresize = function(event) {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+}
 
 /* Make the 3 objects */
 var hero = {
