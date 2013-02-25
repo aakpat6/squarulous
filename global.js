@@ -2,6 +2,7 @@
 var HERO_SIZE = 32;
 var TARGET_SIZE = 30;
 var OBSTACLE_SIZE = 30;
+var THRESHOLD = 5;
 /*
  * Place any and all global variables that you want to use in this file.
  * Variables in this will be able to be accessed by any of the other files.
@@ -39,8 +40,8 @@ var target = {
 
 function Obstacle() {   
    var speedfactor = 4;
-   this.x = OBSTACLE_SIZE + (Math.random() * (canvas.width-2*OBSTACLE_SIZE));
-   this.y = OBSTACLE_SIZE + (Math.random() * (canvas.height-2*OBSTACLE_SIZE));
+   this.x = OBSTACLE_SIZE-(2*THRESHOLD) + (Math.random() * (canvas.width-2*OBSTACLE_SIZE));
+   this.y = OBSTACLE_SIZE-(2*THRESHOLD) + (Math.random() * (canvas.height-2*OBSTACLE_SIZE));
    this.dx = Math.floor(Math.random() * speedfactor) + 1;
    this.dy = Math.floor(Math.random() * speedfactor) + 1;
    

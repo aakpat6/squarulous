@@ -50,10 +50,10 @@ function moveObstacles() {
    /* First, move all the obstacles */
    for (var i = 0; i < obstacles.length; i++) {
       var o = obstacles[i];
-      if (!(o.x > 0 && o.x < canvas.width-OBSTACLE_SIZE-10)) {
+      if (!(o.x > THRESHOLD && o.x+OBSTACLE_SIZE < canvas.width-THRESHOLD)) {
          o.dx *= -1;
       }
-      if (!(o.y > 0 && o.y < canvas.height-OBSTACLE_SIZE-10)) {
+      if (!(o.y > THRESHOLD && o.y+OBSTACLE_SIZE < canvas.height-THRESHOLD)) {
          o.dy *= -1;
       }
       o.x += o.dx;
@@ -61,38 +61,49 @@ function moveObstacles() {
       
       /*If an obstacle intersects an obstacle, collide the obstacles*/
       for(var j=i+1;j<obstacles.length;j++) {
-            var THRESHOLD = 3;
             var other = obstacles[j];
-            if(other.x <= o.x + OBSTACLE_SIZE
-               && o.x <= (other.x + OBSTACLE_SIZE)
-               && other.y <= (o.y + OBSTACLE_SIZE)
-               && o.y <= (other.y + OBSTACLE_SIZE))
-            {
-               //Right to left collision
-               if(Math.abs(other.x + OBSTACLE_SIZE - o.x) <= THRESHOLD) {
-                  var temp = o.dx;
-                  o.dx = other.dx;
-                  other.dx - temp;
-               }
-               //Bottom to top collision
-               if(Math.abs(other.y + OBSTACLE_SIZE - o.y) <= THRESHOLD) {
-                  var temp = o.dy;
-                  o.dy = other.dy;
-                  other.dy = temp;
-               }
-               //Top to bottom collision
-               if(Math.abs(other.y - (o.y + OBSTACLE_SIZE)) <= THRESHOLD) {
-                  var temp = o.dy;
-                  o.dy = other.dy;
-                  other.dy = temp;
-               }
-               //Left to right collision
-               if(Math.abs(other.x - (o.x + OBSTACLE_SIZE)) <= THRESHOLD) {
-                  var temp = o.dx;
-                  o.dx = other.dx;
-                  other.dx - temp;
+            if(o.x < other.x) {
+               //o=left,other=right
+               if(Math.abs(o.x + OBSTACLE_SIZE - other.x) <= THRESHOLD) {
+                  if(Math.abs(o.y - other.y <= THRESHOLD)) {
+                     var temp = o.dx;
+                     o.dx = other.dx;
+                     other.dx = temp;
+                  }
                }
             }
+            else {
+               //o=right,other=left
+               if(Math.abs(other.x + OBSTACLE_SIZE - o.x) <= THRESHOLD) {
+                  if(Math.abs(o.y - other.y <= THRESHOLD)) {
+                     var temp = o.dx;
+                     o.dx = other.dx;
+                     other.dx = temp;
+                  }
+               }
+            }
+
+            if(o.y < other.y) {
+               //o=top,other=bottom
+               if(Math.abs(o.y + OBSTACLE_SIZE - other.y) <= THRESHOLD) {
+                  if(Math.abs(o.x - other.x <= THRESHOLD)) {
+                     var temp = o.dy;
+                     o.dy = other.dy;
+                     other.dy = temp;
+                  }
+               }
+            }
+            else {
+               //o=bottom,other=top
+               if(Math.abs(other.y + OBSTACLE_SIZE - o.y) <= THRESHOLD) {
+                  if(Math.abs(o.x - other.x <= THRESHOLD)) {
+                     var temp = o.dy;
+                     o.dy = other.dy;
+                     other.dy = temp;
+                  }
+               }
+            }
+
       }
 
       /* If an obstacle intersects the hero, it's game over */
