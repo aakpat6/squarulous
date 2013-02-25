@@ -9,6 +9,11 @@ window.onresize = function(event) {
    canvas.height = window.innerHeight;
 }
 
+function startScreen() {
+   handle = setTimeout(startScreen, 10);
+   renderStartScreen();
+}
+
 function gameOver() {
    handle = setTimeout(gameOver, 10);
    gameStatus = GAME_OVER;   
@@ -20,10 +25,7 @@ function main() {
    handle = setTimeout(main, 10); // Makes sure main will happen every 10 ms
    update();
    render();
-   /* Makes sure that the update is occurring as it should */
-   last = new Date().getMilliseconds();
 }
 
-moveTarget(); // Initialize the target
-var last = new Date().getMilliseconds();
-main(); // Start the main game loop
+gameStatus = START_SCREEN;
+startScreen();

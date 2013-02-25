@@ -23,7 +23,7 @@ var obstacles = []; // Obstacles list
 var score = 0;
 var keysDown = {}; // Dictionary of which keys are pressed at a given time.
 var handle = null; // The timeout handle
-var gameStatus = IN_GAME;
+var gameStatus = START_SCREEN;
 
 /* Make the 3 objects */
 var hero = {
