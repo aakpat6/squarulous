@@ -50,10 +50,10 @@ function moveObstacles() {
    /* First, move all the obstacles */
    for (var i = 0; i < obstacles.length; i++) {
       var o = obstacles[i];
-      if (!(o.x > 0 && o.x < canvas.width-OBSTACLE_SIZE)) {
+      if (!(o.x > 0 && o.x < canvas.width-OBSTACLE_SIZE-10)) {
          o.dx *= -1;
       }
-      if (!(o.y > 0 && o.y < canvas.height-OBSTACLE_SIZE)) {
+      if (!(o.y > 0 && o.y < canvas.height-OBSTACLE_SIZE-10)) {
          o.dy *= -1;
       }
       o.x += o.dx;
@@ -61,7 +61,7 @@ function moveObstacles() {
       
       /*If an obstacle intersects an obstacle, collide the obstacles*/
       for(var j=i+1;j<obstacles.length;j++) {
-            var THRESHOLD = 1;
+            var THRESHOLD = 3;
             var other = obstacles[j];
             if(other.x <= o.x + OBSTACLE_SIZE
                && o.x <= (other.x + OBSTACLE_SIZE)

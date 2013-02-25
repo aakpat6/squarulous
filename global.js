@@ -38,11 +38,11 @@ var target = {
 };
 
 function Obstacle() {   
-   var speedfactor = 5;
+   var speedfactor = 4;
    this.x = OBSTACLE_SIZE + (Math.random() * (canvas.width-2*OBSTACLE_SIZE));
    this.y = OBSTACLE_SIZE + (Math.random() * (canvas.height-2*OBSTACLE_SIZE));
-   this.dx = Math.random() * speedfactor;
-   this.dy = Math.random() * speedfactor;
+   this.dx = Math.floor(Math.random() * speedfactor) + 1;
+   this.dy = Math.floor(Math.random() * speedfactor) + 1;
    
    /* Start the obstacle on the top or the right? */
    var randStart = Math.floor(Math.random() * 2);
