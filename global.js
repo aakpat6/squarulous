@@ -47,6 +47,6 @@ function Obstacle() {
    
    /* Start the obstacle on the top or the right? */
    var randStart = Math.floor(Math.random() * 2);
-   if (randStart == 0) this.y = 5;
-   else this.x = 5;
+   if (randStart == 0) this.y = 20;
+   else this.x = 20;
 }
