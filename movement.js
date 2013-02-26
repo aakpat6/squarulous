@@ -63,7 +63,7 @@ function moveObstacles() {
       for(var j=i+1;j<obstacles.length;j++) {
             var other = obstacles[j];
             if(o.x < other.x) {
-               //o=left,other=right
+               o=left,other=right
                if(Math.abs(o.x + OBSTACLE_SIZE - other.x) <= THRESHOLD) {
                   if(Math.abs(o.y - other.y) <= THRESHOLD) {
                      var temp = o.dx;
@@ -103,7 +103,6 @@ function moveObstacles() {
                   }
                }
             }
-
       }
 
       /* If an obstacle intersects the hero, it's game over */
