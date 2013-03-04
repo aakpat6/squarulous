@@ -29,8 +29,8 @@ var gameStatus = START_SCREEN;
 /* Make the 3 objects */
 var hero = {
    speed: 5,
-   x: canvas.width/2,
-   y: canvas.height/2,
+   x: -100,//canvas.width/2,
+   y: -100,//canvas.height/2,
 };
 
 var target = {

@@ -40,10 +40,13 @@ function checkStartClick(e) {
        e.y > 350 && e.y < 430) {
       /* Reinit vars */
       obstacles = [];
+      for (var i = 0; i < 20; i++) {
+        obstacles.push(new Obstacle());
+      }
       score = 0;
       moveTarget();
-      hero.x = canvas.width/2;
-      hero.y = canvas.height/2;
+      hero.x = -100;//canvas.width/2;
+      hero.y = -100;//canvas.height/2;
       clearTimeout(handle);
       gameStatus = IN_GAME;
       main();

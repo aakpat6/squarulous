@@ -56,8 +56,6 @@ function moveObstacles() {
       if (!(o.y > THRESHOLD && o.y+OBSTACLE_SIZE < canvas.height-THRESHOLD)) {
          o.dy *= -1;
       }
-      o.x += o.dx;
-      o.y += o.dy;
       
       /*If an obstacle intersects an obstacle, collide the obstacles*/
       for(var j=i+1;j<obstacles.length;j++) {
@@ -116,5 +114,7 @@ function moveObstacles() {
          clearTimeout(handle);
          gameOver();
       }
+      o.x += o.dx;
+      o.y += o.dy;
    }
 }
