@@ -63,7 +63,7 @@ function moveObstacles() {
             if(o.x < other.x) {
                //o=left,other=right
                if(Math.abs(o.x + OBSTACLE_SIZE - other.x) <= THRESHOLD) {
-                  if(Math.abs(o.y - other.y) <= THRESHOLD) {
+                  if(Math.abs(o.y - other.y) <= OBSTACLE_SIZE) {
                      var temp = o.dx;
                      o.dx = other.dx;
                      other.dx = temp;
@@ -73,7 +73,7 @@ function moveObstacles() {
             else {
                //o=right,other=left
                if(Math.abs(other.x + OBSTACLE_SIZE - o.x) <= THRESHOLD) {
-                  if(Math.abs(o.y - other.y) <= THRESHOLD) {
+                  if(Math.abs(o.y - other.y) <= OBSTACLE_SIZE) {
                      var temp = o.dx;
                      o.dx = other.dx;
                      other.dx = temp;
@@ -84,7 +84,7 @@ function moveObstacles() {
             if(o.y < other.y) {
                //o=top,other=bottom
                if(Math.abs(o.y + OBSTACLE_SIZE - other.y) <= THRESHOLD) {
-                  if(Math.abs(o.x - other.x) <= THRESHOLD) {
+                  if(Math.abs(o.x - other.x) <= OBSTACLE_SIZE) {
                      var temp = o.dy;
                      o.dy = other.dy;
                      other.dy = temp;
@@ -94,7 +94,7 @@ function moveObstacles() {
             else {
                //o=bottom,other=top
                if(Math.abs(other.y + OBSTACLE_SIZE - o.y) <= THRESHOLD) {
-                  if(Math.abs(o.x - other.x) <= THRESHOLD) {
+                  if(Math.abs(o.x - other.x) <= OBSTACLE_SIZE) {
                      var temp = o.dy;
                      o.dy = other.dy;
                      other.dy = temp;
